@@ -2,57 +2,118 @@
 <html lang="en" style="height: 100%">
 <head>
   <base href="{{_BASE}}">
-  <title>Example</title>
+  <title>EvolvitCMS {% block title %}{% endblock %}</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{% block description %}{% endblock %}"/>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bare-css@2.0.3/css/bare.min.css">
-  <link rel="stylesheet" type="text/css" href="cms/sharedstyle.css">
-  <meta name="google-signin-client_id" content="785648520554-sqghvcrl2gprpa3a02bkfkinp8s398mv.apps.googleusercontent.com">
-
-  <!--
-  <meta name="keywords" content="">
+  <meta name="keywords" content="self hosted CMS ">
   <link rel="icon" href="images/favicon.png">
-  -->
+	<!-- stylesheet css -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/nivo-lightbox.css">
+	<link rel="stylesheet" href="css/nivo_themes/default/default.css">
+	<link rel="stylesheet" href="css/templatemo-style.css">
+	<!-- google web font css -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
+
+  <!-- <link rel="stylesheet" type="text/css" href="cms/sharedstyle.css"> -->
+
 </head>
-<body style="display: flex; flex-flow: column; height: 100%">
-  <nav>
-    <label>
-      <input type="checkbox">
-      <header>
-        <!-- you can leave this empty if you don't want a title -->
-        <a><!--<img src="img/bareCSS.svg">-->Evolvit CMS</a>
-      </header>
-      
-      <ul>
-        <li><a href="index">Home</a></li>
-        <li>
-          <a>Posts</a>
-          <menu>
-          {% for item in fetch("Post") if item.Publish == 'true' %}
-            <menuitem><a href="post/{{item.Slug}}">{{item.Title}}</a></menuitem>
-          {% endfor %}
-          </menu>
-        </li>
-      </ul>
-    </label>
-  </nav>
+<body>
 
-<section style="flex:1; overflow:auto;">
-  {% block content %}{% endblock %}
-</section>
-
-  <footer>
-    <grid>		
-      <div col="1/1" style="text-align: center">
-        <p>
-          <a att href="https://github.com/vujovicigor/evolvitcms" target="_blank">
-            github.com/vujovicigor/evolvitcms
-          </a>
-        </p>
+<!-- navigation -->
+  <div class="container sticky">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="navbar-header">
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon icon-bar"></span>
+          <span class="icon icon-bar"></span>
+          <span class="icon icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand"><img src="images/logo.png" class="img-responsive" alt="logo"></a>
       </div>
-    </grid>
-  </footer>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="i" class="{{ _GET[0]=='i'?'active':'' }}">HOME</a></li>
+          <li><a href="a" class="{{ _GET[0]=='a'?'active':'' }}">ABOUT US</a></li>
+          <li><a href="portfolio.html">PORTFOLIO</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>		
+
+
+  <!-- MAIN CONTENT-->
+  {% block content %}{% endblock %}
+
+
+<!-- footer section -->
+<footer>
+	<div class="container">
+		<div class="row">
+        
+			<div class="col-md-5 col-sm-4">
+				<img src="images/logo.png" class="img-responsive" alt="logo">
+				<p>Onetel is free Bootstrap v3.3.5 HTML5 layout from 
+                <a rel="nofollow" href="http://www.facebook.com/templatemo" target="_parent">templatemo</a> website.
+                Feel free to use it for your website.</p>
+				<p><i class="fa fa-phone"></i> 010-020-0340</p>
+				<p><i class="fa fa-envelope-o"></i> info@company.com</p>
+              <p><i class="fa fa-globe"></i> www.company.com</p>
+			</div>
+
+			<div class="col-md-3 col-sm-4">
+				<h3>Useful Links</h3>
+				<p><a href="#">HTML5 Templates</a></p>
+				<p><a href="#">CSS3 Tricks</a></p>
+				<p><a href="#">Design Blog</a></p>
+				<p><a href="#">Animations</a></p>
+			</div>
+            
+			<div class="col-md-4 col-sm-4 newsletter">
+				<h3>Newsletter</h3>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismo.</p>
+				<div class="input-group">
+           	    	<form action="#" method="post">
+                        <input name="email" type="email" placeholder="Enter your email" class="form-control" autorequired>
+                    	<button type="submit" name="submit" class="btn email">Submit</button>
+                  	</form>
+				 </div>
+			</div>
+            
+		</div>
+	</div>
+</footer>
+
+<!-- copyright section -->
+<div class="copyright">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-sm-6">
+				<p>Copyright © 2084 Company Name</p>
+			</div>
+			<div class="col-md-6 col-sm-6">
+				<ul class="social-icons">
+					<li><a href="#" class="fa fa-facebook"></a></li>
+					<li><a href="#" class="fa fa-twitter"></a></li>
+					<li><a href="#" class="fa fa-dribbble"></a></li>
+					<li><a href="#" class="fa fa-pinterest"></a></li>
+					<li><a href="#" class="fa fa-behance"></a></li>
+					<li><a href="#" class="fa fa-envelope-o"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- javascript js -->	
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>	
+<script src="js/nivo-lightbox.min.js"></script>
+<script src="js/custom.js"></script>
 
 </body>
 </html>
