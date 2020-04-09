@@ -150,13 +150,18 @@ img {
 
 /* home section */
 #home {
-  background: url('../images/home-bg.jpg') no-repeat;
+  background: url('../images/home-bg.png') no-repeat;
   background-size: cover;
   background-position: center;
   min-height: 500px;
   padding-top: 180px;
   padding-bottom: 100px;
 }
+
+#home:hover {
+  background-image: url('../images/home-bg2.png');
+}
+
 #home h1,
 #home h3 {
   line-height: 30px;

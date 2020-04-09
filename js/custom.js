@@ -42,6 +42,28 @@ $('#portfolio a').nivoLightbox({
     });
 
 // HIDE MOBILE MENU AFTER CLIKING ON A LINK
-   $('.navbar-collapse a').click(function(){
-        $(".navbar-collapse").collapse('hide');
-    });
+$('.navbar-collapse a').click(function(){
+    $(".navbar-collapse").collapse('hide');
+});
+
+/*
+var animTs = [
+  { "on":true , "ts":3000 }, // on 3 sec
+  { "on":false, "ts":1000 }, // off 1 sec
+  { "on":true , "ts":1000 }, // on 1 sec
+]
+
+var home = document.getElementById('home')
+var anim_index = -1;
+function next_timeout(){
+  anim_index = (anim_index+1) % animTs.length;
+  var img = animTs[anim_index].on?"url('images/home-bg2.png')":"url('images/home-bg.png')"
+  home.style.backgroundImage = img
+  setTimeout( next_timeout, animTs[anim_index].ts)
+}
+if (home) {
+  next_timeout()
+//  document.body.style.backgroundImage = "url('../images/home-bg.jpg') no-repeat"
+//  home.style.background = "url('images/team2.jpg') no-repeat"
+}
+*/
