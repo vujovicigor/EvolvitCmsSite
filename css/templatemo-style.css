@@ -27,7 +27,8 @@ body
 	{
 		background: #0a1221;
     color: #808080;
-		font-family: 'Montserrat', sans-serif;
+    font-family: 'Fira Sans', sans-serif;
+/*		font-family: 'Montserrat', sans-serif; */
     font-weight: 400;
 	}
 
@@ -59,6 +60,10 @@ body
 h1,h2,h3,h4 {
   color: #fff;
   font-weight: bold;
+}
+
+h2 {
+  color: #0a1221;
 }
 
 h1,h2 {
@@ -170,7 +175,7 @@ img {
 
 /* divider section */
 .divider {
-  color: #fff;
+  color: #0a1221;
   text-align: center;
 }
 .divider .fa {
@@ -195,14 +200,18 @@ img {
   bottom: 60px;
   cursor: pointer;
 }
+
 .divider .divider-one {
-  background: #c14000;
+  background: #657998;
 }
 .divider .divider-two {
-  background: #009988;
+  background: #52637f;
 }
 .divider .divider-three {
-  background: #ffa500;
+  background: #44536b;
+}
+.divider-active h2 {
+  color: #ffcb08;
 }
 
 /* about section */
