@@ -1,6 +1,6 @@
 RewriteEngine On
 Options +FollowSymLinks
-Options -Indexe
+Options -Indexes
 # force https
 #RewriteCond %{HTTPS} off
 #RewriteCond %{HTTP_HOST} !localhost

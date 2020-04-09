@@ -4,11 +4,28 @@ OneTel Template
 
 http://www.templatemo.com/tm-468-onetel
 
+background: #0a1221
+header pravougaonik: #101c30
+zuta sarica levo u headeru: #ffcc29
+obelezena stranica u headeru (svetlo plava): #657998
+
 */
+:root {
+/*  --secondary-color: #d54ab6; */
+  --secondary-color: #ffcc29;
+  --zuta: #ffcc29;
+  --header-bg-active: #657998;
+}
+
+.sticky{
+  position: sticky;
+  top: -20px;
+  z-index: 1;
+}
 
 body
 	{
-		background: #101010;
+		background: #0a1221;
     color: #808080;
 		font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -79,14 +96,15 @@ img {
 /* navigation */
 
 .navbar-default {
-    background: #202020;
-    border: none;
-    border-left: 6px solid #d54ab6;
-    padding-right: 40px;
-    margin: 0 !important;
-    position: relative;
-    top: 20px;
-  }
+  font-family: 'Fira Sans', sans-serif;
+  background: #101c30;
+  border: none;
+  border-left: 6px solid var(--secondary-color);
+  padding-right: 40px;
+  margin: 0 !important;
+  position: relative;
+  top: 20px;
+}
 .navbar-default .navbar-brand {
     font-size: 40px;
     line-height: 40px;
@@ -101,16 +119,16 @@ img {
  }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #ffa500;
+  color: var( --zuta );
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  	color: #ffa500;
+  	color: var( --zuta );
   	background-color: transparent;
 }
 .navbar-default .navbar-toggle {
-  	background: #d54ab6;
+  	background: var(--secondary-color);
   	border-radius: 0px;
    	border: none;
    	margin-top: 20px;
@@ -126,7 +144,8 @@ img {
 }
 
 .active {
-	background: #333;
+  background: var(--header-bg-active );
+  color: var( --zuta ) !important;
 }
 
 /* home section */
@@ -225,7 +244,7 @@ img {
   padding: 20px;
 }
 #team h4 {
-  color: #d54ab6;
+  color: var(--secondary-color);
 }
 #team img {
   opacity: 0.8;
@@ -395,7 +414,7 @@ footer a:hover {
   
 }
 .social-icons li a:hover {
-  background: #d54ab6;
+  background: var(--secondary-color);
   color: #fff;
 }
 
