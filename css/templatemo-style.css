@@ -192,6 +192,8 @@ img {
 }
 .divider h2 {
   padding-bottom: 4px;
+  font-size: 26px;
+  font-weight: 300;
 }
 .divider .divider-wrapper {
   padding: 2px 20px 40px 20px;
