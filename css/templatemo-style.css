@@ -159,11 +159,12 @@ img {
 }
 #home {
   background: url('../images/home-bg.png') no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   min-height: 500px;
   padding-top: 180px;
   padding-bottom: 100px;
+  background-color: #203554;
 }
 
 #home:hover {
