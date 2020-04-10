@@ -265,6 +265,7 @@ img {
 
 .divider-three .divider-bulb {
   background: url('../images/3light_kocka_off.png') no-repeat;
+  height: 90px;
 }
 
 /* about section */
