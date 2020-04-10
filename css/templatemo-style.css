@@ -196,7 +196,7 @@ img {
   font-weight: 300;
 }
 .divider .divider-wrapper {
-  padding: 2px 20px 40px 20px;
+  padding: 2px 26px 40px 26px;
   position: relative;
   bottom: 40px;
   transition: all 0.4s ease-in;
@@ -220,6 +220,8 @@ img {
 .divider p{
   text-align: left;
   white-space: pre-line;
+  font-weight: 300;
+  font-size: 15px;
 }
 
 .divider-one h2, .divider-two h2, .divider-three h2{
