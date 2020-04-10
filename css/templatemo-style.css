@@ -191,10 +191,11 @@ img {
   padding-bottom: 4px;
 }
 .divider .divider-wrapper {
-  padding: 40px 20px 40px 20px;
+  padding: 2px 20px 40px 20px;
   position: relative;
   bottom: 40px;
   transition: all 0.4s ease-in;
+  height: 26rem;
 }
 .divider .divider-wrapper:hover {
   bottom: 60px;
@@ -210,8 +211,56 @@ img {
 .divider .divider-three {
   background: #44536b;
 }
-.divider-active h2 {
+
+.divider p{
+  text-align: left;
+  white-space: pre-line;
+}
+
+.divider-one h2, .divider-two h2, .divider-three h2{
+  transition: all 0.9s;
+  text-transform: uppercase;
+}
+
+.divider-one:hover h2, .divider-two:hover h2, .divider-three:hover h2{
+  transition: all 0.9s;
   color: #ffcb08;
+}
+
+.divider-one:hover .divider-bulb{
+  background-image: url('../images/1light_kocka_on.png');
+  filter: drop-shadow(0px 0px 0px yellow);
+}
+.divider-two:hover .divider-bulb{
+  background-image: url('../images/2light_kocka_on.png');
+  filter: drop-shadow(0px 0px 2px yellow);
+}
+.divider-three:hover .divider-bulb{
+  background-image: url('../images/3light_kocka_on.png');
+  filter: drop-shadow(0px 0px 4px yellow);
+}
+
+.divider-bulb {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 90px;
+  height: 93px;
+  background: url('../images/1light_kocka_off.png') no-repeat;
+  background-size: cover;
+  background-position: center;  
+}
+
+.divider-one .divider-bulb {
+  background: url('../images/1light_kocka_off.png') no-repeat;
+}
+
+.divider-two .divider-bulb {
+  background: url('../images/2light_kocka_off.png') no-repeat;
+}
+
+.divider-three .divider-bulb {
+  background: url('../images/3light_kocka_off.png') no-repeat;
 }
 
 /* about section */
