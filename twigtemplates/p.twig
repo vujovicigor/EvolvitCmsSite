@@ -1,0 +1,26 @@
+{% extends "base.twig" %}
+{% set slug = _GET['1'] %}
+{% set Post = fetch("Post", {id:slug})[0] %}
+{% block description %}{{Post.Description}}{% endblock %}
+{% block content %}
+<div class="blog" > 
+  {{Post.Body | raw}} 
+</div> 
+<style>
+.blog {
+  color: white;
+  margin-top: 20px;
+  font-weight: 300;
+}
+
+.blog h2{
+  color: var(--secondary-color);
+  font-weight: 300;
+}
+.blog h3{
+  color: var(--header-bg-active);
+  font-weight: 300;
+  margin-top: 0;
+}
+</style>
+{% endblock %}

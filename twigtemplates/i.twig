@@ -69,12 +69,18 @@ with design
 	</div>
 </div>
 
-<!-- about section -->
+
+
+<!-- about section, Video -->
 <div id="about">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-sm-12">
-				<img src="images/about-img.jpg" class="img-responsive" alt="about img">
+			<div class="col-md-6 col-sm-12" id="preview-target" style="margin: auto;">
+<!--				<img src="images/about-img.jpg" class="img-responsive" alt="about img"> -->
+        <video width="100%" height="100%" controls poster="images/video_preview.png">
+          <source src="video/Evolvit_web.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>        
 			</div>
 			<div class="col-md-6 col-sm-12 about-des">
 				<h2>Startup Business</h2>
@@ -127,5 +133,23 @@ with design
 	</div>
 </div>		
 
+<script src="https://unpkg.com/@vime-js/preview"></script>
+<script>
+//import { Preview } from '@vime-js/preview';
+
+const target = document.getElementById('preview-target');
+
+// Mount
+const preview = new Preview({ 
+  target,
+  // If you'd like to initialize any props on setup, you can do so here.
+  props: {}
+});
+preview.src = 'http://moonspacerock.com/press/Evolvit_finalica.mp4';
+// 
+
+// Destroy
+//preview.$destroy();
+</script>
 
 {% endblock %}
