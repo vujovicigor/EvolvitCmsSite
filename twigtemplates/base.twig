@@ -26,6 +26,10 @@
       display: flex;
       flex-direction: column;
     }
+    /*bs3 safari bug*/
+    .row [class*=col-]{
+      margin:0 -.3px;
+    } 
   </style>
 	<!-- google web font css 
   <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
