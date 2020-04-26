@@ -74,6 +74,7 @@ with design
 <!-- about section, Video -->
 <div id="about">
 	<div class="container">
+
 		<div class="row">
 			<div class="col-md-6 col-sm-12" id="preview-target" style="margin: auto;">
 <!--				<img src="images/about-img.jpg" class="img-responsive" alt="about img"> -->
@@ -82,17 +83,67 @@ with design
         Your browser does not support the video tag.
         </video>        
 			</div>
-			<div class="col-md-6 col-sm-12 about-des">
-				<h2>Startup Business</h2>
-				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet.</p>
-				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Dolore magna aliquam erat volutpat.</p>
-				<a href="about.html" class="btn btn-default">LEARN MORE</a>
+
+			<div class="col-md-6 col-sm-12 about-des" style="background-color:#101c30; color:#657998 ; font-weight: 300;">
+				<h2 style="color:#ffcb08; font-weight: 300;">SIMPLE, LIGHTWEIGHT CMS</h2>
+				<p>There are many situations when developer builds a fantastic fast website in pure html/css, and after that the client says - Can I upload the image on the index page and edit the text?
+        </p><p>
+        Then the agony for the developer ensues, and he soon learns that he has to throw everything he has done and rework everything from the beginning using some imposed philosophy. (e.g. WordPress)
+
+        </p><p>EvolvitCMS is the smartest and easiest solution to avoid agony. Just copy&paste it on your existing server and make your changes easily.
+        </p>
+				
+				<!-- <a href="about.html" class="btn btn-default">LEARN MORE</a> -->
 			</div>
 		</div>
+
+  
+		<div class="row" style="margin-top: 4rem; margin-bottom: 4rem;">
+			<div class="col-md-8 col-sm-12 about-des" style="background-color:#101c30; color:#657998 ; font-weight: 300;">
+				<p style="white-space:pre-wrap; position:relative">
+I created an small website (4 pages) with bootstrap.
+Like landing page, pages for events, etc etc... nothing really complicated.
+Then I need to change text like 100 of time until is finally approved.
+I’m looking for a way for other person to edit this page.
+Just text, maybe change the pictures.
+As you see, nothing really complicated.
+
+As can I imagine this in my head is just a back-end and them after login, they can:
+A. Go to the frontend and change text directly, maybe images or
+B. In the back end, have modules where you change the text.
+
+Is a really simple, basic, CMS.
+As you see for this situation, Wordpress / Drupal / Joolma is overkill.
+Too complicated for what I needed.
+I dont need plugins, comments, users, themes.
+Also, I dont have access to SSH on the server, I just have access to FTP. I said this because I checked some solutions and the required to install the CMS over the terminal.
+
+          <div style="width: 0; position:absolute; right:-100px; top:15px;
+            height: 0;
+            border-style: solid;
+            border-width: 12px 0 12px 100px;
+            border-color: transparent transparent transparent #101c30;">
+          </div>
+
+        </p>
+
+        
+			</div>
+
+			<div class="col-md-4 col-sm-12">
+        <div>
+				  <img src="images/saved_my_day.png" class="img-responsive" alt="saved_my_day">
+        </div>
+			</div>
+
+		</div>
+
+
 	</div>
 </div>
 
 <!-- portfolio section -->
+{#
 <div id="portfolio">
 	<div class="container">
 		<div class="row">
@@ -132,24 +183,11 @@ with design
 		</div>
 	</div>
 </div>		
-
-<script src="https://unpkg.com/@vime-js/preview"></script>
-<script>
-//import { Preview } from '@vime-js/preview';
-
-const target = document.getElementById('preview-target');
-
-// Mount
-const preview = new Preview({ 
-  target,
-  // If you'd like to initialize any props on setup, you can do so here.
-  props: {}
-});
-preview.src = 'http://moonspacerock.com/press/Evolvit_finalica.mp4';
-// 
-
-// Destroy
-//preview.$destroy();
-</script>
-
+#}
+<style>
+video:focus {
+    border: 0;
+    outline: 0;
+}
+</style>
 {% endblock %}
