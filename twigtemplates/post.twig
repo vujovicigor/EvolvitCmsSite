@@ -4,7 +4,7 @@
 {% block description %}{{Post.Description}}{% endblock %}
 {% block content %}
 	<h5>{{Post.Title}} <tag style="float:right; text-transform: none;">Posted at {{Post.Date}}</tag></h5>
-  {% if Post.Image %} <img src="img/{{Post.Image}}"> {% endif %}
+  {% if Post.Image %} <img src="img/{{Post.Image}}" style="object-fit: contain;width: auto;max-width: 100%;"> {% endif %}
   <div style="margin-top: 1rem;" >{{Post.Body | raw}} </div> 
 
   {% set Comment = fetch("Comment") %}
