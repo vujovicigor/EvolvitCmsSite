@@ -7,7 +7,7 @@
 
 <div id="homez">
 	<div class="container">
-		<iframe src="Evol_html/Evol_html" style="border:0" width="999px" height="250px">
+		<iframe id="iframe" src="Evol_html/Evol_html" style="border:0" width="999px" height="250px">
 		</iframe>
 	</div>
 </div>
@@ -62,7 +62,19 @@ with design
 	</div>
 </div>
 
-
+<script>
+function displayWindowSize(){
+  var frame_width = 999
+  var frame_heigth = 250
+  var f = document.getElementById('iframe')
+  var parentW = f.parentElement.clientWidth
+  var scale = (parentW-30)/frame_width;
+  f.style.transform=`scale(${scale})`
+  f.parentElement.style.height = `${frame_heigth*scale}px`      
+}
+window.addEventListener("resize", displayWindowSize);
+displayWindowSize();
+</script>
 
 
 {% endblock %}
