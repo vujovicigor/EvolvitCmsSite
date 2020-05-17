@@ -7,12 +7,12 @@ require "key.php";
 //$key = random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
 $from_db = array("news", "news1", "news2", "news3");
 
-$message = serialize( $from_db );
+$message = json_encode( $from_db );
 
 $ciphertext = safeEncrypt($message, $key);
 $plaintext = safeDecrypt($ciphertext, $key);
-$duration = 30000000;
-setcookie('playground', $plaintext, time()+$duration, '/', '.evolvitcms.com');
+$duration = 60*60*24*30; // 30 days
+setcookie('playground', $plaintext, time() + $duration, '/', '.evolvitcms.com');
 
 var_dump($ciphertext);
 var_dump($plaintext);
