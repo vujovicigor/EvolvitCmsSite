@@ -15,6 +15,7 @@
   <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
+  <meta name="google-signin-client_id" content="1059878098248-ug4kn2qe72tv2a3vfnjv739phs89615a.apps.googleusercontent.com">
 
 	<!-- stylesheet css -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -22,6 +23,7 @@
 	<link rel="stylesheet" href="css/nivo-lightbox.css">
 	<link rel="stylesheet" href="css/nivo_themes/default/default.css">
 	<link rel="stylesheet" href="css/templatemo-style.css">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <style>
     .row {
       display: -webkit-box;
@@ -69,7 +71,7 @@
           <li><a href="index" class="{{ (_GET[0] in ['index',''])?'active':'' }}">HOME</a></li>
           <li><a href="doc/quickstart" class="{{ _GET[1]=='quickstart'?'active':'' }}">QUICKSTART</a></li>
           <li><a href="download" class="{{ _GET[0]=='download'?'active':'' }}">DOWNLOAD</a></li>
-          <li><a href="evo" class="{{ _GET[0]=='evo'?'active':'' }}">CONTACT</a></li>
+          <li><a href="playground" class="{{ _GET[0]=='playground'?'active':'' }}">PLAYGROUND</a></li>
         </ul>
       </div>
     </div>
@@ -179,6 +181,14 @@
   `
 </script>
 <script src="https://mysitechatsupport.com/chatplugin.js" data-id="b9dsS8BhL3YRQjRhYEP04g=="></script>
-
+<script src="js/js.cookie.min.js"></script>
+<script>
+function authcb(obj){
+  for (var i=0; i<obj.length; i++){
+    console.log(obj[i])
+  //  Cookies.set('name', 'value', { domain: '.evolvitcms.com' })
+  }
+}
+</script>
 </body>
 </html>
