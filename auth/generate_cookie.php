@@ -7,7 +7,7 @@ require "key.php";
 //$key = random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
 $from_db = array("news", "news1", "news2", "news3");
 
-$message = from_db.join(':');
+$message = join( $from_db, ':');
 
 $ciphertext = safeEncrypt($message, $key);
 $plaintext = safeDecrypt($ciphertext, $key);
