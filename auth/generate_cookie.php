@@ -5,7 +5,9 @@ require "key.php";
 
 // Do this once then store it somehow:
 //$key = random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
-$message = 'We are all living in a yellow submarine';
+$from_db = array("news", "news1", "news2", "news3");
+
+$message = serialize( $from_db );
 
 $ciphertext = safeEncrypt($message, $key);
 $plaintext = safeDecrypt($ciphertext, $key);
