@@ -48,4 +48,12 @@ values
 ( :_session_google_user_email, :_session_google_user_family_name, :_session_google_user_given_name, :_session_google_user_locale, :_session_google_user_picture, :_session_google_user_sub)
 ON CONFLICT(google_user_email) DO NOTHING
 ', $_POST);
-//print_r( $f );
+
+$f = fetch('
+select  p.`Name`, p.`Subdomain`
+, p.`google_user_email` ||  ':'||  p.`Subdomain` as sess_val
+from PlaygroundProjects p
+where p.`google_user_email` = :_session_google_user_email
+', $_POST);
+
+print_r( $f );
