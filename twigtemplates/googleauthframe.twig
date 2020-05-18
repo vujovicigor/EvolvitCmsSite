@@ -93,7 +93,7 @@ postMsg('AAAAAAAA', '*');
     console.log('frejm dobio',e )
     if (e && e.data && e.data.__seq){
       console.log('iz gfrejma saljem postmsg',e )
-      postMsg({tip:'projects', lista:[], __seq:__seq}, '*');
+      e.source.postMsg({tip:'projects', lista:[], __seq:__seq}, '*');
       // do 
     }
    /* 
