@@ -87,13 +87,12 @@
   }
 window.postMessagePromise = postMessagePromise
 
-postMsg('AAAAAAAA', '*');
 
   function receiveMessage(e){
     console.log('frejm dobio',e )
     if (e && e.data && e.data.__seq){
       console.log('iz gfrejma saljem postmsg',e )
-      e.source.postMsg({tip:'projects', lista:[], __seq:__seq}, '*');
+      e.source.postMsg({tip:'projects', lista:[], __seq:e.data.__seq}, '*');
       // do 
     }
    /* 
