@@ -70,13 +70,30 @@
 
 
   var postMsg = window.top.postMessage
-//  setTimeout(() => {
-//    postMsg('hello', '*');
-//  }, 15000);
+  let __seq = 0
+  function postMessagePromise(msg){
+    return new Promise(function(resolve, reject) {
+      let seq = __seq++;
 
-  window.onmessage = function(e){
+      let event_ref = window.addEventListener("message", function(resp){
+        if (resp && resp.data && resp.data.__seq && resp.data.__seq == seq){
+          window.removeEventListener("message", event_ref)
+          resolve(resp.data)
+        }
+      }, false);
+
+      postMsg({...msg, seq})
+    });
+  }
+window.postMessagePromise = postMessagePromise
+
+
+  function receiveMessage((e){
     console.log('frejm dobio',e )
-    
+    if (e && e.data && e.data.__id){
+      // do 
+    }
+   /* 
       if (e.data == 'hello') {
           alert('ok from iframe');
           return
@@ -85,7 +102,10 @@
           postMsg({tip:'projects', lista:[]}, '*');
           return
       }
+      */
   };
+
+  window.addEventListener("message", receiveMessage, false);
 
 </script>
 </body>
