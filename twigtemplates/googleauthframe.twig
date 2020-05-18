@@ -80,8 +80,8 @@
           alert('ok from iframe');
           return
       }
-      if (e.data == 'projects') {
-          
+      if (e.data && e.data.tip == 'projects') {
+          postMsg({tip:'projects', lista:[]}, '*');
           return
       }
   };
