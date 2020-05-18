@@ -69,7 +69,7 @@
   }
 
 
-  var postMsg = window.top.postMessage
+  var postMsg = window.parent
   let __seq = 0
   function postMessagePromise(msg){
     return new Promise(function(resolve, reject) {
