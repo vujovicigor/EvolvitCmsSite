@@ -47,4 +47,4 @@ insert into `PlaygroundUsers`
 values 
 ( :_session_google_user_email, :_session_google_user_family_name, :_session_google_user_given_name, :_session_google_user_locale, :_session_google_user_picture, :_session_google_user_sub)
 ', $_POST);
-print_r( $f );
+//print_r( $f );
