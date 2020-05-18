@@ -46,5 +46,6 @@ insert into `PlaygroundUsers`
 ( `google_user_email`, `google_user_family_name`, `google_user_given_name`, `google_user_locale`, `google_user_picture`, `google_user_sub`) 
 values 
 ( :_session_google_user_email, :_session_google_user_family_name, :_session_google_user_given_name, :_session_google_user_locale, :_session_google_user_picture, :_session_google_user_sub)
+ON CONFLICT(google_user_email) DO NOTHING
 ', $_POST);
 //print_r( $f );
