@@ -82,11 +82,12 @@
         }
       }, false);
 
-      postMsg({...msg, seq}, '*')
+      postMsg({...msg, __seq:seq}, '*')
     });
   }
 window.postMessagePromise = postMessagePromise
 
+postMsg({'AAAAAAAA'}, '*');
 
   function receiveMessage(e){
     console.log('frejm dobio',e )
