@@ -82,7 +82,7 @@
         }
       }, false);
 
-      postMsg({...msg, seq})
+      postMsg({...msg, seq}, '*')
     });
   }
 window.postMessagePromise = postMessagePromise
