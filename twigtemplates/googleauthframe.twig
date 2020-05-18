@@ -90,7 +90,8 @@ window.postMessagePromise = postMessagePromise
 
   function receiveMessage(e){
     console.log('frejm dobio',e )
-    if (e && e.data && e.data.__id){
+    if (e && e.data && e.data.__seq){
+      postMsg({tip:'projects', lista:[], __seq:__seq}, '*');
       // do 
     }
    /* 
