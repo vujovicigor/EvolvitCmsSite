@@ -57,9 +57,9 @@
     }
     // for php
     function fetch($sqlstring, $params=array()){
-        return api($sqlstring, $params);        
+        return api($sqlstring, $params, true);        
     }
-    function api($sqlstring, $params=array()){
+    function api($sqlstring, $params=array(), $trusted=true){
         global $db;
         $orgsqlstring = $sqlstring;
         $action = isset($params['_action'])?$params['_action']:'';
@@ -87,7 +87,7 @@
             //echo json_encode(array()); // todo
             //return;
         }
-        if ( $wc>1 && session_status() == PHP_SESSION_ACTIVE && $params['_session_user_role'] != 2 ){
+        if ( !$trusted && $wc>1 && session_status() == PHP_SESSION_ACTIVE && $params['_session_user_role'] != 2 ){
           // only api.php starts session  
           return array('message'=>'Custom queryes from outer word are disabled');
         }        
