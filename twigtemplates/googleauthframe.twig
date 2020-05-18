@@ -70,12 +70,19 @@
 
 
   var postMsg = window.top.postMessage
-  
-  postMsg('hello', '*')
+  setTimeout(() => {
+    postMsg('hello', '*');
+  }, 15000);
 
   window.onmessage = function(e){
+    console.log('frejm dobio',e )
       if (e.data == 'hello') {
           alert('ok from iframe');
+          return
+      }
+      if (e.data == 'projects') {
+          
+          return
       }
   };
 
