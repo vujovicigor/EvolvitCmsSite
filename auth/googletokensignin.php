@@ -53,7 +53,7 @@ $f = fetch('
 select  p.`Name`, p.`Subdomain`
 , p.google_user_email ||  \':\'||  p.`Subdomain` as sess_val
 from PlaygroundProjects p
-where p.`google_user_email` = :_session_google_user_email
+--where p.`google_user_email` = :_session_google_user_email
 ', $_POST);
 
 print_r( $f );
