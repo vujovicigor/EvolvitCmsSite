@@ -56,4 +56,4 @@ from PlaygroundProjects p
 where p.`google_user_email` = :_session_google_user_email
 ', $_POST);
 
-print_r( $f );
+//print_r( $f );
