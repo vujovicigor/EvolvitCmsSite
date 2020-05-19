@@ -92,7 +92,17 @@ window.postMessagePromise = postMessagePromise
     console.log('frejm dobio',e )
     if (e && e.data && e.data.__seq){
       console.log('iz gfrejma saljem postmsg',e )
-      e.source.postMessage({tip:'projects', lista:[], __seq:e.data.__seq}, '*');
+
+      if (e.data.namespace='PlaygroundProjectsAdd'){
+        fetch('cms/api?query=PlaygroundProjectsAdd', {
+          credentials:'same-origin',
+          body: JSON.stringify(e.data)
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
+        e.source.postMessage({tip:'moze il ne', __seq:e.data.__seq}, '*');
+      }
+      //e.source.postMessage({tip:'projects', lista:[], __seq:e.data.__seq}, '*');
       // do 
     }
    /* 
