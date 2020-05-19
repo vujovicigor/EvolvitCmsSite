@@ -96,6 +96,7 @@ window.postMessagePromise = postMessagePromise
       if (e.data.namespace='PlaygroundProjectsAdd'){
         fetch('cms/api?query=PlaygroundProjectsAdd', {
           credentials:'same-origin',
+          method: 'POST',
           body: JSON.stringify(e.data)
         })
         .then(response => response.json())
