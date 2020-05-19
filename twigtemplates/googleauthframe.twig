@@ -93,15 +93,18 @@ window.postMessagePromise = postMessagePromise
     if (e && e.data && e.data.__seq){
       console.log('iz gfrejma saljem postmsg',e )
 
-      if (e.data.namespace='PlaygroundProjectsAdd'){
+      if (e.data.namespace=='PlaygroundProjectsAdd'){
         fetch('cms/api.php?query=PlaygroundProjectsAdd', {
           credentials:'same-origin',
           method: 'POST',
           body: JSON.stringify(e.data)
         })
         .then(response => response.json())
-        .then(data => console.log(data));
-        e.source.postMessage({tip:'moze il ne', __seq:e.data.__seq}, '*');
+        .then(data => {
+          console.log(data)
+          e.source.postMessage({data:data, __seq:e.data.__seq}, '*');
+        });
+        return
       }
       //e.source.postMessage({tip:'projects', lista:[], __seq:e.data.__seq}, '*');
       // do 
