@@ -34,25 +34,24 @@
 
 var auth2;
 
-/**
- * Initializes the Sign-In client.
- */
+
 
     gapi.load('auth2', function(){
       console.log('init gapi')
-        /**
-         * Retrieve the singleton for the GoogleAuth library and set up the
-         * client.
-         */
-        auth2 = gapi.auth2.init({
-            client_id: '1059878098248-ug4kn2qe72tv2a3vfnjv739phs89615a.apps.googleusercontent.com'
-        });
+      /**
+        * Retrieve the singleton for the GoogleAuth library and set up the
+        * client.
+        */
+      auth2 = gapi.auth2.init({
+          client_id: '1059878098248-ug4kn2qe72tv2a3vfnjv739phs89615a.apps.googleusercontent.com'
+      });
 
-        var isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get()
-        console.log('frame isSignedIn', isSignedIn)
+      var isSignedIn = gapi.auth2.getAuthInstance().then((ai)=>{
+        console.log('frame isSignedIn', ai.isSignedIn.get())
+      })
 
-        // Attach the click handler to the sign-in button
-        auth2.attachClickHandler('signin-button', {}, onSuccess, onFailure);
+      // Attach the click handler to the sign-in button
+      auth2.attachClickHandler('signin-button', {}, onSuccess, onFailure);
     });
 
 
