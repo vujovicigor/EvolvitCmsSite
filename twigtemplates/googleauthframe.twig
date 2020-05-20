@@ -122,7 +122,7 @@
         e.source.postMessage({data:{ isSignedIn:isSignedIn, email:email }, __seq:e.data.__seq}, '*');
         return
       }
-      if (e.data.namespace=='signIn()'){
+      if (e.data.namespace=='gapi.auth2.getAuthInstance().signIn()'){
         gapi.auth2.getAuthInstance().signIn()
         .then((r)=> {
           var isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get()
