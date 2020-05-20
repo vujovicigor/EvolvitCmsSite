@@ -50,6 +50,7 @@ var auth2;
         var isSignedIn = ai.isSignedIn.get()
         console.log('frame isSignedIn', isSignedIn)
         if (isSignedIn) onSignIn(ai.currentUser.get())
+        else postMsg({namespace:'signin', data:{isSignedIn:false, email:null}},'*')
       })
 
       // Attach the click handler to the sign-in button
@@ -79,7 +80,7 @@ var onFailure = function(error) {
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     
-    postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}},'*')
+    //postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}},'*')
     
     var id_token = googleUser.getAuthResponse().id_token;
     var xhr = new XMLHttpRequest();
@@ -87,6 +88,8 @@ var onFailure = function(error) {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
       //console.log('Signed in as: ' + xhr.responseText);
+      
+      postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}},'*')
       try{
         GoogleUserData =  JSON.parse(xhr.responseText)
         console.log('server resp:', GoogleUserData)
