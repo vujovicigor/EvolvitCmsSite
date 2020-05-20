@@ -46,12 +46,16 @@ var auth2;
           client_id: '1059878098248-ug4kn2qe72tv2a3vfnjv739phs89615a.apps.googleusercontent.com'
       });
 
-      var isSignedIn = gapi.auth2.getAuthInstance().then((ai)=>{
-        console.log('frame isSignedIn', ai.isSignedIn.get())
+      gapi.auth2.getAuthInstance().then((ai)=>{
+        var isSignedIn = ai.isSignedIn.get()
+        console.log('frame isSignedIn', isSignedIn)
+        //gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getEmail()
+        onSignIn(ai.currentUser.get())
       })
 
       // Attach the click handler to the sign-in button
-      auth2.attachClickHandler('signin-button', {}, onSuccess, onFailure);
+//      auth2.attachClickHandler('signin-button', {}, onSuccess, onFailure);
+      auth2.attachClickHandler('signin-button', {}, onSignIn, onFailure);
     });
 
 
