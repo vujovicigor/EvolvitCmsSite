@@ -49,8 +49,7 @@ var auth2;
       gapi.auth2.getAuthInstance().then((ai)=>{
         var isSignedIn = ai.isSignedIn.get()
         console.log('frame isSignedIn', isSignedIn)
-        //gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getEmail()
-        onSignIn(ai.currentUser.get())
+        if (isSignedIn) onSignIn(ai.currentUser.get())
       })
 
       // Attach the click handler to the sign-in button
