@@ -150,6 +150,8 @@
       }
       */
   };
+  var isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get()
+  console.log('frame isSignedIn', isSignedIn)
 
   window.addEventListener("message", receiveMessage, false);
 
