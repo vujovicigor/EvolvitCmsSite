@@ -114,11 +114,16 @@ var onFailure = function(error) {
 
 // { Name: "news", Subdomain: "news", google_user_email: "vujovichigor@gmail.com", id: "1" }
   function addCookieToSubdomains(obj){
+    var arr = []
     for (var i=0; i<obj.length; i++){
+      arr.push(obj[i].id|0)
       console.log('addCookieToSubdomain ', obj[i]);
-      Cookies.set('owner', JSON.stringify(obj[i]), { domain: obj[i].id+'.evolvitcms.com' })
-      console.log('owner cookie=', JSON.stringify(obj[i]), 'domain', obj[i].id+'.evolvitcms.com');
+      //Cookies.set('owner', JSON.stringify(obj[i]), { domain: obj[i].id+'.evolvitcms.com' })
+      //console.log('owner cookie=', JSON.stringify(obj[i]), 'domain', obj[i].id+'.evolvitcms.com');
     }
+    console.log('owner cookie=', arr)
+    Cookies.set('owner', JSON.stringify(arr), { domain: 'evolvitcms.com', expires: 365, path: '/' })
+
   }
 
 
