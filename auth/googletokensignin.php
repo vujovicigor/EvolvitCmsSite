@@ -55,6 +55,6 @@ from PlaygroundProjects p
 where p.`google_user_email` = :_session_google_user_email
 ', $_POST);
 
-json_encode($f);
+echo json_encode($f);
 
 //print_r( $f );
