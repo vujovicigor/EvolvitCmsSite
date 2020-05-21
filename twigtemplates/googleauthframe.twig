@@ -30,33 +30,28 @@
 <script src="js/js.cookie.min.js"></script>
 <script>
   document.domain = "evolvitcms.com";
-
-
-var auth2;
-
-
-
-    gapi.load('auth2', function(){
-      console.log('init gapi')
-      /**
-        * Retrieve the singleton for the GoogleAuth library and set up the
-        * client.
-        */
-      auth2 = gapi.auth2.init({
-          client_id: '1059878098248-ug4kn2qe72tv2a3vfnjv739phs89615a.apps.googleusercontent.com'
-      });
-
-      gapi.auth2.getAuthInstance().then((ai)=>{
-        var isSignedIn = ai.isSignedIn.get()
-        console.log('frame isSignedIn', isSignedIn)
-        if (isSignedIn) onSignIn(ai.currentUser.get())
-        else postMsg({namespace:'signin', data:{isSignedIn:false, email:null}},'*')
-      })
-
-      // Attach the click handler to the sign-in button
-//      auth2.attachClickHandler('signin-button', {}, onSuccess, onFailure);
-      auth2.attachClickHandler('signin-button', {}, onSignIn, onFailure);
+  var auth2;
+  gapi.load('auth2', function(){
+    console.log('init gapi')
+    /**
+      * Retrieve the singleton for the GoogleAuth library and set up the
+      * client.
+      */
+    auth2 = gapi.auth2.init({
+        client_id: '1059878098248-ug4kn2qe72tv2a3vfnjv739phs89615a.apps.googleusercontent.com'
     });
+
+    gapi.auth2.getAuthInstance().then((ai)=>{
+      var isSignedIn = ai.isSignedIn.get()
+      console.log('frame isSignedIn', isSignedIn)
+      if (isSignedIn) onSignIn(ai.currentUser.get())
+      else postMsg({namespace:'signin', data:{isSignedIn:false, email:null}},'*')
+    })
+
+    // Attach the click handler to the sign-in button
+//      auth2.attachClickHandler('signin-button', {}, onSuccess, onFailure);
+    auth2.attachClickHandler('signin-button', {}, onSignIn, onFailure);
+  });
 
 
 /**
@@ -108,7 +103,7 @@ var onFailure = function(error) {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
-      postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}},'*')
+      postMsg({namespace:'signin', data:{isSignedIn:false, email:null}},'*')
     });
   }
 
