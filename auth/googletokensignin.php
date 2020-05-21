@@ -33,7 +33,7 @@ $_SESSION['_session_google_user_given_name'] = $userdata['given_name'];
 $_SESSION['_session_google_user_family_name'] = $userdata['family_name'];
 $_SESSION['_session_google_user_locale'] = $userdata['locale'];
 
-echo $resp;
+//echo $resp;
 
 include("../cms/engine.php");
 //$userdata = json_decode($resp, TRUE);
@@ -50,10 +50,11 @@ ON CONFLICT(google_user_email) DO NOTHING
 ', $_POST);
 
 $f = fetch('
-select  p.`Name`, p.`Subdomain`
-, p.google_user_email ||  \':\'||  p.`Subdomain` as sess_val
+select  p.*
 from PlaygroundProjects p
 where p.`google_user_email` = :_session_google_user_email
 ', $_POST);
+
+json_decode($f, TRUE);
 
 //print_r( $f );
