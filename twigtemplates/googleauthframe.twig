@@ -117,6 +117,7 @@ var onFailure = function(error) {
     for (var i=0; i<obj.length; i++){
       console.log('addCookieToSubdomain ', obj[i]);
       Cookies.set('owner', JSON.stringify(obj[i]), { domain: obj[i].id+'.evolvitcms.com' })
+      console.log('owner cookie=', JSON.stringify(obj[i]), 'domain', obj[i].id+'.evolvitcms.com';
     }
   }
 
