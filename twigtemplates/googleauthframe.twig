@@ -92,7 +92,8 @@ var onFailure = function(error) {
       postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}},'*')
       try{
         GoogleUserData =  JSON.parse(xhr.responseText)
-        console.log('server resp:', GoogleUserData)
+        //console.log('server resp:', GoogleUserData)
+        addCookieToSubdomains(GoogleUserData)
       }
       catch(e){
         console.log('Bad verification response', e)
@@ -111,10 +112,11 @@ var onFailure = function(error) {
     });
   }
 
-  function authcb(obj){
+// { Name: "news", Subdomain: "news", google_user_email: "vujovichigor@gmail.com", id: "1" }
+  function addCookieToSubdomains(obj){
     for (var i=0; i<obj.length; i++){
-      console.log(obj[i])
-    //  Cookies.set('name', 'value', { domain: '.evolvitcms.com' })
+      console.log('addCookieToSubdomain ', obj[i]);
+      Cookies.set('owner', JSON.stringify(obj[i]), { domain: obj[i].id+'.evolvitcms.com' })
     }
   }
 
