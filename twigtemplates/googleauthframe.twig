@@ -121,8 +121,8 @@ var onFailure = function(error) {
       //Cookies.set('owner', JSON.stringify(obj[i]), { domain: obj[i].id+'.evolvitcms.com' })
       //console.log('owner cookie=', JSON.stringify(obj[i]), 'domain', obj[i].id+'.evolvitcms.com');
     }
-    console.log('owner cookie=', arr)
-    Cookies.set('owner', JSON.stringify(arr), { domain: 'evolvitcms.com', expires: 365, path: '/' })
+    console.log('pg owner cookie=', arr)
+    Cookies.set('pg', JSON.stringify(arr), { domain: 'evolvitcms.com', expires: 365, path: '/' })
 
   }
 
