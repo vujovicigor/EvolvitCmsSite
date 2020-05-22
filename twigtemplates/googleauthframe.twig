@@ -177,10 +177,18 @@ var onFailure = function(error) {
       }
 
       if (e.data.namespace=='PlaygroundProjectsAdd'){
+        var body = new FormData()
+        var obj = e.data
+        if (obj)
+            Object.keys(obj).forEach(function(key) {
+              var tmpObj = obj[key]===null?'':obj[key]
+              if (typeof tmpObj == 'object') tmpObj=JSON.stringify(tmpObj)
+              body.append(key, tmpObj)
+            });
         fetch('cms/api.php?query=PlaygroundProjectsAdd', {
           credentials:'same-origin',
           method: 'POST',
-          body: JSON.stringify(e.data)
+          body: body
         })
         .then(response => response.json())
         .then(data => {
