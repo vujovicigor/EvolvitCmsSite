@@ -150,11 +150,11 @@ var onFailure = function(error) {
   }
   window.postMessagePromise = postMessagePromise
 
-  function PlaygroundProjectsList(){
+  function PlaygroundProjectsList(e){
     return fetch('cms/api.php?query=PlaygroundProjectsList', {
       credentials:'same-origin',
       method: 'POST',
-      body: JSON.stringify(e.data)
+      //body: JSON.stringify(e.data)
     })
     .then(response => response.json()).then(data => {
       console.log(data)
@@ -170,7 +170,7 @@ var onFailure = function(error) {
 
       if (e.data.namespace=='PlaygroundProjectsList'){
         // get subdomains list
-        PlaygroundProjectsList().then((data)=>{
+        PlaygroundProjectsList(e).then((data)=>{
           e.source.postMessage({data:data, __seq:e.data.__seq}, '*');
         })
         return
@@ -187,7 +187,7 @@ var onFailure = function(error) {
           console.log(data)
 
           // get subdomains list
-          PlaygroundProjectsList().then(()=>{
+          PlaygroundProjectsList(e).then(()=>{
             e.source.postMessage({data:data.last_rowid|0, __seq:e.data.__seq}, '*');
           })
         });
