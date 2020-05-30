@@ -356,12 +356,21 @@ img {
 .price-wrapper:hover .price-free-label{
   background-image: url('../images/download_on.png');
 }
+#price-free-label-preload{
+  background-image: url('../images/download_on.png');
+  display:none;
+}
 
 .price-premium-label{
   background-image: url('../images/donate_off.png');
 }
 .price-wrapper:hover .price-premium-label{
   background-image: url('../images/donate_on.png');
+}
+
+#price-premium-label-preload{
+  background-image: url('../images/donate_on.png');
+  display:none;
 }
 
 .price-switch{
@@ -371,6 +380,10 @@ img {
 .price-wrapper:hover .price-switch{
   background-image: url('../images/button_on.png');
   height: 213px;
+}
+#price-switch-preload{
+  background-image: url('../images/button_on.png');
+  display:none;
 }
 #price {
   padding-top: 60px;
