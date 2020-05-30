@@ -1,4 +1,5 @@
 <?php
+/*
 // This refers to the previous code block.
 require "safecrypto.php"; 
 require "key.php"; 
@@ -18,4 +19,5 @@ setcookie('subplayground2', $ciphertext, time() + $duration, '/', 'news.evolvitc
 
 var_dump($ciphertext);
 var_dump($plaintext);
+*/
 
