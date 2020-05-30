@@ -351,17 +351,17 @@ img {
 
 /* price section */
 .price-free-label{
-  background-image: url('../images/pricing_free_off.png');
+  background-image: url('../images/download_off.png');
 }
 .price-wrapper:hover .price-free-label{
-  background-image: url('../images/pricing_free_on.png');
+  background-image: url('../images/download_on.png');
 }
 
 .price-premium-label{
-  background-image: url('../images/pricing_premium_off.png');
+  background-image: url('../images/donate_off.png');
 }
 .price-wrapper:hover .price-premium-label{
-  background-image: url('../images/pricing_premium_on.png');
+  background-image: url('../images/donate_on.png');
 }
 
 .price-switch{
