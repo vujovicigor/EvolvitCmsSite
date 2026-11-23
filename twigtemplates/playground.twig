@@ -23,7 +23,6 @@
 	<link rel="stylesheet" href="css/nivo-lightbox.css">
 	<link rel="stylesheet" href="css/nivo_themes/default/default.css">
 	<link rel="stylesheet" href="css/templatemo-style.css">
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <style>
     body {
       display: flex;
@@ -55,8 +54,8 @@
 </head>
 <body>
   <div>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a href="#" onclick="signOut();">Sign out</a>
+    <div id="signin-button" style="display:inline-block"></div>
+    <a href="#" id="signout-link" style="display:none" onclick="EvolvitGoogle.signOut(); return false;">Sign out</a>
   </div>
   <div id="plgr" style="flex:1">
     <iframe id="iframe" src="https://news-11.evolvitcms.com/playground/#newspage" style="border:0;" width="100%" height="100%">
@@ -68,41 +67,18 @@
 <script src="js/bootstrap.min.js"></script>	
 <script src="js/custom.js"></script>
 
-<script src="js/js.cookie.min.js"></script>
+<script src="cms/googlesignin.js"></script>
 <script>
 
-  function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-    var id_token = googleUser.getAuthResponse().id_token;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'auth/googletokensignin.php');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-      //console.log('Signed in as: ' + xhr.responseText);
-      try{
-        GoogleUserData =  JSON.parse(xhr.responseText)
-        console.log('server resp:', GoogleUserData)
-      }
-      catch(e){
-        console.log('Bad verification response', e)
-      }
-    };
-    xhr.send('idtoken=' + id_token);
-
-  }
-
-
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
+  // Google sign-in (Google Identity Services, see cms/googlesignin.js); auth/googletokensignin.php
+  // also registers the playground user and returns their projects
+  var GoogleUserData = {}
+  EvolvitGoogle.init({
+    button: 'signin-button',
+    signinUrl: 'auth/googletokensignin.php',
+    onSignIn: function (user) { GoogleUserData = user; document.getElementById('signout-link').style.display = '' },
+    onSignOut: function () { GoogleUserData = {}; document.getElementById('signout-link').style.display = 'none' }
+  })
 
   function authcb(obj){
     for (var i=0; i<obj.length; i++){

@@ -16,244 +16,71 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
   <meta name="google-signin-client_id" content="1059878098248-ug4kn2qe72tv2a3vfnjv739phs89615a.apps.googleusercontent.com">
-
-  <script src="https://apis.google.com/js/platform.js" ></script>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400&display=swap" rel="stylesheet">
-  <style>
-  .abcRioButton{
-    box-shadow:none !important;
-    color: #6c757d !important;
-    height: 40px !important;
-    border: solid 1px #6c757d !important;
-    padding-top: 3px !important;
-    border-radius: .25rem !important;
-  }
-  </style>
 </head>
-<body style="margin:0; padding:0;overflow:hidden">
+<body style="margin:0; padding:0; overflow:hidden; font-family:'Fira Sans', sans-serif">
+  <div id="signin-button" style="display:inline-block"></div>
+  <a href="#" id="signout-link" style="display:none; color:#6c757d; line-height:40px; font-size:14px; text-decoration:none"
+     onclick="EvolvitGoogle.signOut(); return false;">Sign out</a>
 
-<!--    <div class="g-signin2" data-onsuccess="onSignIn" style="display: inline-block;"></div> -->
-    <div class="g-signin2" id="signin-button" style="display: inline-block;"></div>
-<!--
-    <a href="#" onclick="signOut();">Sign out</a> 
--->
-<script src="js/js.cookie.min.js"></script>
+<script src="cms/googlesignin.js"></script>
 <script>
-  document.domain = "evolvitcms.com";
-  var auth2;
-  gapi.load('auth2', function(){
-    console.log('init gapi')
-    /**
-      * Retrieve the singleton for the GoogleAuth library and set up the
-      * client.
-      */
-    auth2 = gapi.auth2.init({
-        client_id: '1059878098248-ug4kn2qe72tv2a3vfnjv739phs89615a.apps.googleusercontent.com'
-    });
-
-    gapi.auth2.getAuthInstance().then((ai)=>{
-      var isSignedIn = ai.isSignedIn.get()
-      console.log('frame isSignedIn', isSignedIn)
-      if (isSignedIn) onSignIn(ai.currentUser.get())
-      else postMsg({namespace:'signin', data:{isSignedIn:false, email:null}})
-    })
-
-    // Attach the click handler to the sign-in button
-//      auth2.attachClickHandler('signin-button', {}, onSuccess, onFailure);
-    auth2.attachClickHandler('signin-button', {}, onSignIn, onFailure);
-  });
-
-
-/**
- * Handle successful sign-ins.
- */
-var onSuccess = function(user) {
-    console.log('Signed in as ' + user.getBasicProfile().getName());
- };
-
-/**
- * Handle sign-in failures.
- */
-var onFailure = function(error) {
-    console.log(error);
-};
-
-  function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    
-    //postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}})
-    
-    var id_token = googleUser.getAuthResponse().id_token;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'auth/googletokensignin.php');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-      //console.log('Signed in as: ' + xhr.responseText);
-      
-      postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}})
-      try{
-        GoogleUserData =  JSON.parse(xhr.responseText)
-        //console.log('server resp:', GoogleUserData)
-        // ownership cookie (pg_owner) is now issued server-side, signed
-      }
-      catch(e){
-        console.log('Bad verification response', e)
-      }
-    };
-    xhr.send('idtoken=' + id_token);
-
-  }
-
-
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-      postMsg({namespace:'signin', data:{isSignedIn:false, email:null}})
-    });
-  }
-
-// { Name: "news", Subdomain: "news", google_user_email: "vujovichigor@gmail.com", id: "1" }
-  function addCookieToSubdomains(obj){
-    var arr = []
-    for (var i=0; i<obj.length; i++){
-      arr.push(obj[i].id|0)
-      console.log('addCookieToSubdomain ', obj[i]);
-      //Cookies.set('owner', JSON.stringify(obj[i]), { domain: obj[i].id+'.evolvitcms.com' })
-      //console.log('owner cookie=', JSON.stringify(obj[i]), 'domain', obj[i].id+'.evolvitcms.com');
-    }
-
-  }
-
-
-// postmessagepromise util
-  // Only playground pages may talk to this frame (it can reveal the signed-in user's e-mail and projects)
+  // Google sign-in frame embedded by the playground (<project>.evolvitcms.com/playground).
+  // Only playground pages may talk to it: it can reveal the signed-in e-mail and project list.
   var PG_ORIGIN_RE = /^https:\/\/([a-z0-9-]+\.)?evolvitcms\.com$/
   var parentOrigin = null
   try { var ro = new URL(document.referrer).origin; if (PG_ORIGIN_RE.test(ro)) parentOrigin = ro } catch(e) {}
-  var postMsg = function(msg){ if (parentOrigin) window.parent.postMessage(msg, parentOrigin) }
-  let __seq = 0
-  function postMessagePromise(msg){
-    return new Promise(function(resolve, reject) {
-      let seq = ++__seq;
+  function postMsg(msg){ if (parentOrigin && window.parent !== window) window.parent.postMessage(msg, parentOrigin) }
 
-      let event_ref = window.addEventListener("message", function(resp){
-        if (resp && resp.data && resp.data.__seq && resp.data.__seq == seq){
-          window.removeEventListener("message", event_ref)
-          resolve(resp.data)
-        }
-      }, false);
-
-      postMsg({...msg, __seq:seq})
-    });
-  }
-  window.postMessagePromise = postMessagePromise
-
-  function PlaygroundProjectsList(e){
-    return fetch('auth/projects.php', {
-      credentials:'same-origin',
-      method: 'POST',
-      //body: JSON.stringify(e.data)
-    })
-    .then(response => response.json()).then(data => {
-      return data
-    });
+  var state = { isSignedIn: false, email: null }
+  function setState(isSignedIn, email){
+    state = { isSignedIn: isSignedIn, email: email }
+    document.getElementById('signin-button').style.display = isSignedIn ? 'none' : 'inline-block'
+    document.getElementById('signout-link').style.display = isSignedIn ? 'inline' : 'none'
+    postMsg({ namespace: 'signin', data: state })
   }
 
-  function receiveMessage(e){
-    console.log('frejm dobio',e )
-    if (!PG_ORIGIN_RE.test(e.origin)) return
+  function post(url, data){
+    var body = new FormData()
+    Object.keys(data || {}).forEach(function(k){ body.append(k, data[k] === null ? '' : data[k]) })
+    return fetch(url, { method: 'POST', credentials: 'same-origin', body: body }).then(function(r){ return r.json() })
+  }
+
+  // also refreshes the signed pg_owner cookie used by the playground
+  function PlaygroundProjectsList(){ return post('auth/projects.php') }
+
+  EvolvitGoogle.init({
+    button: 'signin-button',
+    signinUrl: 'auth/googletokensignin.php',
+    buttonOptions: { theme: 'outline', size: 'large', text: 'signin', shape: 'rectangular', width: 170 },
+    onSignIn: function(user){ setState(true, user.email) },
+    onSignOut: function(){ setState(false, null) }
+  })
+
+  window.addEventListener('message', function(e){
+    if (!PG_ORIGIN_RE.test(e.origin) || !e.data || !e.data.__seq) return
     parentOrigin = e.origin
-    if (e && e.data && e.data.__seq){
-      console.log('iz gfrejma saljem postmsg',e )
+    var reply = function(data){ e.source.postMessage({ data: data, __seq: e.data.__seq }, e.origin) }
 
-      if (e.data.namespace=='PlaygroundProjectsList'){
-        // get subdomains list
-        PlaygroundProjectsList(e).then((data)=>{
-          e.source.postMessage({data:data, __seq:e.data.__seq}, e.origin);
-        })
-        return
-      }
-
-      if (e.data.namespace=='PlaygroundProjectsAdd'){
-        var body = new FormData()
-        var obj = e.data
-        if (obj)
-            Object.keys(obj).forEach(function(key) {
-              var tmpObj = obj[key]===null?'':obj[key]
-              if (typeof tmpObj == 'object') tmpObj=JSON.stringify(tmpObj)
-              body.append(key, tmpObj)
-            });
-        fetch('cms/api.php?query=PlaygroundProjectsAdd', {
-          credentials:'same-origin',
-          method: 'POST',
-          body: body
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-
-          // get subdomains list
-          PlaygroundProjectsList(e).then(()=>{
-            e.source.postMessage({data:data.last_rowid|0, __seq:e.data.__seq}, e.origin);
-          })
-        });
-        return
-      }
-
-      if(e.data.namespace=='isSignedIn'){
-        var isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get()
-        var email = null;
-        if (isSignedIn) 
-          email = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getEmail()
-
-        console.log('iz gfrejma saljem isSignedIn',email, isSignedIn )
-        e.source.postMessage({data:{ isSignedIn:isSignedIn, email:email }, __seq:e.data.__seq}, e.origin);
-        return
-      }
-
-      if (e.data.namespace=='gapi.auth2.getAuthInstance().signIn()'){
-        gapi.auth2.getAuthInstance().signIn()
-        .then((r)=> {
-          var isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get()
-          var email = null;
-          if (isSignedIn) 
-            email = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getEmail()
-          e.source.postMessage({data:{ isSignedIn:isSignedIn, email:email }, __seq:e.data.__seq}, e.origin);
-        })
-        .catch((err)=> {
-          e.source.postMessage({data:{ isSignedIn:false, email:null }, __seq:e.data.__seq}, e.origin);
-        })
-        return
-      }
-      //e.source.postMessage({tip:'projects', lista:[], __seq:e.data.__seq}, '*');
-      // do 
+    if (e.data.namespace == 'PlaygroundProjectsList') {
+      PlaygroundProjectsList().then(reply)
+      return
     }
-   /* 
-      if (e.data == 'hello') {
-          alert('ok from iframe');
-          return
-      }
-      if (e.data && e.data.tip == 'projects') {
-          postMsg({tip:'projects', lista:[]}, '*');
-          return
-      }
-      */
-  };
-
-  //var isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get()
-  //console.log('frame isSignedIn', isSignedIn)
-
-  window.addEventListener("message", receiveMessage, false);
-
+    if (e.data.namespace == 'PlaygroundProjectsAdd') {
+      post('cms/api.php?query=PlaygroundProjectsAdd', { Name: e.data.Name || '', Subdomain: e.data.Subdomain || '' })
+        .then(function(data){ return PlaygroundProjectsList().then(function(){ reply((data && data.last_rowid) | 0) }) })
+      return
+    }
+    if (e.data.namespace == 'isSignedIn') {
+      reply(state)
+      return
+    }
+    if (e.data.namespace == 'signIn' || e.data.namespace == 'gapi.auth2.getAuthInstance().signIn()') {
+      if (!state.isSignedIn) EvolvitGoogle.prompt() // One Tap; the button in this frame works as well
+      reply(state)
+      return
+    }
+  }, false)
 </script>
 </body>
 </html>
-
-
-
-
