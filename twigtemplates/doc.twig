@@ -35,6 +35,10 @@
 .guide-table { border-collapse: collapse; margin: 10px 0 20px; }
 .guide-table th, .guide-table td { border: 1px solid #22314d; padding: 6px 10px; vertical-align: top; }
 .guide-table th { color: #ffcb08; font-weight: 400; }
+.guide, .blog { min-width: 0; max-width: 100%; }
+.blog pre { max-width: 100%; }
+.guide-table { display: block; max-width: 100%; overflow-x: auto; }
+.blog img { max-width: 100%; height: auto; }
 @media (max-width: 600px) { .guide .toc { columns: 1; } }
 </style>
 {% endblock %}
