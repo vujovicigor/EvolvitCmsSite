@@ -1,10 +1,20 @@
 {% extends "base.twig" %}
 {% block title %}– add a CMS to your website by unzipping it{% endblock %}
 {% block description %}EvolvitCMS – add a CMS to your new or existing website. No SSH, no Composer: just unzip it on any shared hosting.{% endblock %}
+{% block head %}
+  {# Home background images: the visible one and the "lit bulb" hover one, only for the
+     screen size that uses them (breakpoints match css/templatemo-style.css) #}
+  <link rel="preload" as="image" href="images/home-bg.png"        media="(min-width: 778px)" fetchpriority="high">
+  <link rel="preload" as="image" href="images/home-bg2.png"       media="(min-width: 778px)">
+  <link rel="preload" as="image" href="images/home-bg-small.png"  media="(min-width: 451px) and (max-width: 777px)" fetchpriority="high">
+  <link rel="preload" as="image" href="images/home-bg2-small.png" media="(min-width: 451px) and (max-width: 777px)">
+  <link rel="preload" as="image" href="images/home-bg-xs.png"     media="(max-width: 450px)" fetchpriority="high">
+  <link rel="preload" as="image" href="images/home-bg2-xs.png"    media="(max-width: 450px)">
+{% endblock %}
+
 {% block content %}
 
 <!-- home section -->
-<div id="prefetch" style="display:none"></div>
 
 <div id="home">
 	<div class="container">

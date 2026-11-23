@@ -1,14 +1,21 @@
 {% extends "base.twig" %}
 {% block title %}– Download{% endblock %}
 {% block description %}Download EvolvitCMS: unzip it on any PHP 8.1+ shared hosting and you're ready. No SSH or Composer needed.{% endblock %}
+{% block head %}
+  {# switch images: the visible "off" state and the "on" state shown on hover #}
+  <link rel="preload" as="image" href="images/download_off.png" fetchpriority="high">
+  <link rel="preload" as="image" href="images/donate_off.png" fetchpriority="high">
+  <link rel="preload" as="image" href="images/button_off.png" fetchpriority="high">
+  <link rel="preload" as="image" href="images/download_on.png">
+  <link rel="preload" as="image" href="images/donate_on.png">
+  <link rel="preload" as="image" href="images/button_on.png">
+{% endblock %}
+
 {% block content %}
 {% set release = 'https://github.com/vujovicigor/evolvitcms/releases/latest' %}
 {# always the newest release: every release ships an asset named evolvitcms.zip #}
 {% set zip = 'https://github.com/vujovicigor/evolvitcms/releases/latest/download/evolvitcms.zip' %}
 
-<div id="price-free-label-preload" style="display:none"></div>
-<div id="price-premium-label-preload" style="display:none"></div>
-<div id="price-switch-preload" style="display:none"></div>
 
 <div id="price">
 	<div class="container">
