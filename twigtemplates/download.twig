@@ -1,64 +1,80 @@
 {% extends "base.twig" %}
-{% block description %}Download, unzip and play{% endblock %}
+{% block title %}– Download{% endblock %}
+{% block description %}Download EvolvitCMS: unzip it on any PHP 8.1+ shared hosting and you're ready. No SSH or Composer needed.{% endblock %}
 {% block content %}
+{% set release = 'https://github.com/vujovicigor/evolvitcms/releases/latest' %}
+{# always the newest release: every release ships an asset named evolvitcms.zip #}
+{% set zip = 'https://github.com/vujovicigor/evolvitcms/releases/latest/download/evolvitcms.zip' %}
 
 <div id="price-free-label-preload" style="display:none"></div>
 <div id="price-premium-label-preload" style="display:none"></div>
 <div id="price-switch-preload" style="display:none"></div>
 
-<!-- price section -->
 <div id="price">
 	<div class="container">
-    
+
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-offset-2 col-md-8 col-sm-12">
 				<h2>DOWNLOAD</h2>
-        <p>Download for free - support us with a donation</p>
+				<p>Free and open source – if it saves you time, please support it with a donation</p>
 			</div>
-    </div>
-         
-    <div class="row mt30">
+		</div>
 
-			<div class="col-md-2 col-sm-2 col-xs-12">
-      </div>
+		<div class="row mt30" style="justify-content: center;">
 
-			<div class="col-md-4 col-sm-4 col-xs-12">
-        <a href="evolvitcmsfile/evolvitcms.zip" download>
-
-          <div class="price-wrapper" style="text-align: center;">
-            <div class="bg-img-div price-free-label">
-            </div>
-            <div class="bg-img-div price-switch">
-            </div>
-            <h3>FREE</h3>
-            <img src="images/download_button.png" alt="free download">
-          </div>
-        </a>
+			<div class="col-md-4 col-sm-6 col-xs-12">
+				<a href="{{ zip }}">
+					<div class="price-wrapper" style="text-align: center;">
+						<div class="bg-img-div price-free-label"></div>
+						<div class="bg-img-div price-switch"></div>
+						<h3>FREE</h3>
+						<img src="images/download_button.png" alt="Download EvolvitCMS">
+						<p class="download-meta">Latest version · zip · ~5 MB</p>
+					</div>
+				</a>
 			</div>
 
-      <a href="http://paypal.me/vujovicigor/5eur" target="_blank">
-        <div class="col-md-4 col-sm-4 col-xs-12">
-          <div class="price-wrapper" style="text-align: center;">
-            <div class="bg-img-div price-premium-label">
-            </div>
-            <div class="bg-img-div price-switch">
-            </div>
-            <h3>
-            <img src="https://www.paypalobjects.com/webstatic/mktg/logo/bdg_secured_by_pp_2line.png" border="0" alt="Secured by PayPal"
-            style="height: 29px; width: 143px; object-fit: cover;" >
-            </h3>
-            <a href="evolvitcmsfile/evolvitcms.zip" download>
-              <img src="images/donate_button.png" alt="donate">
-            </a>
-          </div>
-        </div>
-      </a>
+			<div class="col-md-4 col-sm-6 col-xs-12">
+				<a href="https://paypal.me/vujovicigor/5eur" target="_blank" rel="noopener">
+					<div class="price-wrapper" style="text-align: center;">
+						<div class="bg-img-div price-premium-label"></div>
+						<div class="bg-img-div price-switch"></div>
+						<h3><img src="https://www.paypalobjects.com/webstatic/mktg/logo/bdg_secured_by_pp_2line.png" alt="Secured by PayPal"
+							style="height: 29px; width: 143px; object-fit: cover;"></h3>
+						<img src="images/donate_button.png" alt="Donate with PayPal">
+						<p class="download-meta">Support development</p>
+					</div>
+				</a>
+			</div>
 
-			<div class="col-md-2 col-sm-2 col-xs-12">
-      </div>      
+		</div>
 
-    </div>
+		<div class="row" style="justify-content: center;">
+			<div class="col-md-8 col-sm-12 download-info">
+				<h3>Install in 3 steps</h3>
+				<ol>
+					<li>Upload the zip to your hosting with its file manager (cPanel, Plesk, DirectAdmin…) into the folder where the site
+						should live – <code>public_html/</code> or a subfolder like <code>public_html/blog/</code> – and choose <b>Extract</b>.
+						Everything is included (Twig and the admin), so no SSH or Composer is needed.</li>
+					<li>Open <code>your-site.com/cms/admin/</code> and <b>immediately</b> create your administrator account.</li>
+					<li>Create your content in the admin, then show it on your pages with Twig templates – see
+						<a href="doc/quickstart">Quickstart</a> and <a href="doc/twig-templates">Templates</a>.</li>
+				</ol>
+				<p><b>Requirements:</b> PHP 8.1 or newer (with <code>pdo_sqlite</code>, <code>gd</code>, <code>fileinfo</code>), Apache or LiteSpeed with <code>.htaccess</code> support – this is what most shared hosting offers.</p>
+				<p>All versions, release notes and the source code are on
+					<a href="{{ release }}" target="_blank" rel="noopener">GitHub Releases</a>.</p>
+			</div>
+		</div>
+
 	</div>
-</div>		
+</div>
 
+<style>
+	.download-meta { color: #8a9bb8; margin-top: 10px; }
+	.download-info { color: #cfd8e8; font-weight: 300; margin-top: 40px; text-align: left; }
+	.download-info h3 { color: #ffcb08; font-weight: 300; }
+	.download-info li { margin-bottom: 10px; }
+	.download-info code { background: rgba(255,255,255,.08); color: #fff; padding: 1px 5px; border-radius: 3px; }
+	.download-info a { color: #ffcb08; }
+</style>
 {% endblock %}

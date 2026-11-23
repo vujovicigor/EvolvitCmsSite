@@ -1,6 +1,8 @@
 {% extends "base.twig" %}
 {% set slug = _GET['1'] %}
-{% set Post = fetch("Post", {id:slug})[0] %}
+{% set Post = fetch("Post", {id:slug})[0] ?? null %}
+{% if not Post or Post.Publish != 'true' %}{% do header('HTTP/1.1 404 Not Found') %}{% set Post = {Title: 'Page not found', Description: '', Body: '<h2>Page not found</h2><p>The page you are looking for does not exist. <a href="index">Go to the home page</a>.</p>'} %}{% endif %}
+{% block title %}– {{ Post.Title }}{% endblock %}
 {% block description %}{{Post.Description}}{% endblock %}
 {% block content %}
 	<h5>{{Post.Title}} <tag style="float:right; text-transform: none;">Posted at {{Post.Date}}</tag></h5>

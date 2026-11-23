@@ -21,7 +21,15 @@ RewriteRule ^$ cms/twig.php?twig_file_name=index [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^img/(.*)$ cms/image.php?id=$1 [L]
+RewriteRule ^img/(.*)$ cms/image.php?id=$1 
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^imgcache/(.*)/([^//]*)$ cms/imgcache.php?id=$2&w=$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^imgcache/(.*)$ cms/imgcache.php?id=$1 [L]
 
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f

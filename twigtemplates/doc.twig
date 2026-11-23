@@ -1,6 +1,8 @@
 {% extends "base.twig" %}
 {% set slug = _GET['1'] %}
-{% set Post = fetch("Post", {id:slug})[0] %}
+{% set Post = fetch("Post", {id:slug})[0] ?? null %}
+{% if not Post or Post.Publish != 'true' %}{% do header('HTTP/1.1 404 Not Found') %}{% set Post = {Title: 'Page not found', Description: '', Body: '<h2>Page not found</h2><p>The page you are looking for does not exist. <a href="index">Go to the home page</a>.</p>'} %}{% endif %}
+{% block title %}– {{ Post.Title }}{% endblock %}
 {% block description %}{{Post.Description}}{% endblock %}
 {% block content %}
 <div class="blog" > 
@@ -22,5 +24,17 @@
   font-weight: 300;
   margin-top: 0;
 }
+.blog a { color: #ffcb08; }
+.blog code { background: rgba(255,255,255,.08); color: #fff; padding: 1px 5px; border-radius: 3px; font-size: 90%; }
+.blog pre { background: #0b1424; border: 1px solid #22314d; border-radius: 6px; padding: 14px 16px; overflow-x: auto; margin: 10px 0 20px; }
+.blog pre code { background: none; padding: 0; color: #d7e1f2; font-size: 13px; line-height: 1.55; white-space: pre; }
+.guide h3 { margin-top: 36px; scroll-margin-top: 90px; }
+.guide .toc { list-style: none; padding-left: 0; columns: 2; }
+.guide .toc li { margin-bottom: 4px; }
+.guide .tip { border-left: 3px solid #ffcb08; padding: 6px 12px; background: rgba(255,203,8,.06); }
+.guide-table { border-collapse: collapse; margin: 10px 0 20px; }
+.guide-table th, .guide-table td { border: 1px solid #22314d; padding: 6px 10px; vertical-align: top; }
+.guide-table th { color: #ffcb08; font-weight: 400; }
+@media (max-width: 600px) { .guide .toc { columns: 1; } }
 </style>
 {% endblock %}
