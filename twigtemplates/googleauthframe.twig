@@ -55,7 +55,7 @@
       var isSignedIn = ai.isSignedIn.get()
       console.log('frame isSignedIn', isSignedIn)
       if (isSignedIn) onSignIn(ai.currentUser.get())
-      else postMsg({namespace:'signin', data:{isSignedIn:false, email:null}},'*')
+      else postMsg({namespace:'signin', data:{isSignedIn:false, email:null}})
     })
 
     // Attach the click handler to the sign-in button
@@ -85,7 +85,7 @@ var onFailure = function(error) {
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     
-    //postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}},'*')
+    //postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}})
     
     var id_token = googleUser.getAuthResponse().id_token;
     var xhr = new XMLHttpRequest();
@@ -94,11 +94,11 @@ var onFailure = function(error) {
     xhr.onload = function() {
       //console.log('Signed in as: ' + xhr.responseText);
       
-      postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}},'*')
+      postMsg({namespace:'signin', data:{isSignedIn:true, email:profile.getEmail()}})
       try{
         GoogleUserData =  JSON.parse(xhr.responseText)
         //console.log('server resp:', GoogleUserData)
-        addCookieToSubdomains(GoogleUserData)
+        // ownership cookie (pg_owner) is now issued server-side, signed
       }
       catch(e){
         console.log('Bad verification response', e)
@@ -113,7 +113,7 @@ var onFailure = function(error) {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
-      postMsg({namespace:'signin', data:{isSignedIn:false, email:null}},'*')
+      postMsg({namespace:'signin', data:{isSignedIn:false, email:null}})
     });
   }
 
@@ -126,14 +126,16 @@ var onFailure = function(error) {
       //Cookies.set('owner', JSON.stringify(obj[i]), { domain: obj[i].id+'.evolvitcms.com' })
       //console.log('owner cookie=', JSON.stringify(obj[i]), 'domain', obj[i].id+'.evolvitcms.com');
     }
-    console.log('pg owner cookie=', arr)
-    Cookies.set('pg', JSON.stringify(arr), { domain: 'evolvitcms.com', expires: 365, path: '/' })
 
   }
 
 
 // postmessagepromise util
-  var postMsg = window.parent.postMessage
+  // Only playground pages may talk to this frame (it can reveal the signed-in user's e-mail and projects)
+  var PG_ORIGIN_RE = /^https:\/\/([a-z0-9-]+\.)?evolvitcms\.com$/
+  var parentOrigin = null
+  try { var ro = new URL(document.referrer).origin; if (PG_ORIGIN_RE.test(ro)) parentOrigin = ro } catch(e) {}
+  var postMsg = function(msg){ if (parentOrigin) window.parent.postMessage(msg, parentOrigin) }
   let __seq = 0
   function postMessagePromise(msg){
     return new Promise(function(resolve, reject) {
@@ -146,33 +148,33 @@ var onFailure = function(error) {
         }
       }, false);
 
-      postMsg({...msg, __seq:seq}, '*')
+      postMsg({...msg, __seq:seq})
     });
   }
   window.postMessagePromise = postMessagePromise
 
   function PlaygroundProjectsList(e){
-    return fetch('cms/api.php?query=PlaygroundProjectsList', {
+    return fetch('auth/projects.php', {
       credentials:'same-origin',
       method: 'POST',
       //body: JSON.stringify(e.data)
     })
     .then(response => response.json()).then(data => {
-      console.log(data)
-      addCookieToSubdomains(data)
       return data
     });
   }
 
   function receiveMessage(e){
     console.log('frejm dobio',e )
+    if (!PG_ORIGIN_RE.test(e.origin)) return
+    parentOrigin = e.origin
     if (e && e.data && e.data.__seq){
       console.log('iz gfrejma saljem postmsg',e )
 
       if (e.data.namespace=='PlaygroundProjectsList'){
         // get subdomains list
         PlaygroundProjectsList(e).then((data)=>{
-          e.source.postMessage({data:data, __seq:e.data.__seq}, '*');
+          e.source.postMessage({data:data, __seq:e.data.__seq}, e.origin);
         })
         return
       }
@@ -197,7 +199,7 @@ var onFailure = function(error) {
 
           // get subdomains list
           PlaygroundProjectsList(e).then(()=>{
-            e.source.postMessage({data:data.last_rowid|0, __seq:e.data.__seq}, '*');
+            e.source.postMessage({data:data.last_rowid|0, __seq:e.data.__seq}, e.origin);
           })
         });
         return
@@ -210,7 +212,7 @@ var onFailure = function(error) {
           email = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getEmail()
 
         console.log('iz gfrejma saljem isSignedIn',email, isSignedIn )
-        e.source.postMessage({data:{ isSignedIn:isSignedIn, email:email }, __seq:e.data.__seq}, '*');
+        e.source.postMessage({data:{ isSignedIn:isSignedIn, email:email }, __seq:e.data.__seq}, e.origin);
         return
       }
 
@@ -221,10 +223,10 @@ var onFailure = function(error) {
           var email = null;
           if (isSignedIn) 
             email = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getEmail()
-          e.source.postMessage({data:{ isSignedIn:isSignedIn, email:email }, __seq:e.data.__seq}, '*');
+          e.source.postMessage({data:{ isSignedIn:isSignedIn, email:email }, __seq:e.data.__seq}, e.origin);
         })
-        .catch((e)=> {
-          e.source.postMessage({data:{ isSignedIn:false, email:null }, __seq:e.data.__seq}, '*');
+        .catch((err)=> {
+          e.source.postMessage({data:{ isSignedIn:false, email:null }, __seq:e.data.__seq}, e.origin);
         })
         return
       }

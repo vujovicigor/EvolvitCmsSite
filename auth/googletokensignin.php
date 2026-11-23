@@ -1,60 +1,23 @@
 <?php
-$idtoken = $_POST['idtoken'];
-
-$curl = curl_init();
-curl_setopt_array($curl, [
-    CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => 'https://oauth2.googleapis.com/tokeninfo?id_token='.$idtoken,
-]);
-// Send the request & save response to $resp
-$resp = curl_exec($curl);
-//echo $resp;
-// Close request to clear up some resources
-curl_close($curl);
-//echo $resp;
-
-$userdata = json_decode($resp, TRUE);
-session_start();
-//echo $resp;
-
-////////////////
-//session_start();
-//print_r( $_POST );
-//print_r( $_SESSION );
-
-
-//header('Access-Control-Allow-Origin: *');
+require_once(dirname(__DIR__).'/cms/security.php');
+evolvit_session_start();
+evolvit_require_post();
+evolvit_require_same_origin();
 header('Content-Type: application/json');
 
-$_SESSION['_session_google_user_sub'] = $userdata['sub'];
-$_SESSION['_session_google_user_email'] = $userdata['email'];
-$_SESSION['_session_google_user_picture'] = $userdata['picture'];
-$_SESSION['_session_google_user_given_name'] = $userdata['given_name'];
-$_SESSION['_session_google_user_family_name'] = $userdata['family_name'];
-$_SESSION['_session_google_user_locale'] = $userdata['locale'];
+$claims = evolvit_google_verify_token(isset($_POST['idtoken']) ? $_POST['idtoken'] : '');
+if ($claims === null) evolvit_json_error('Invalid token', 401);
+evolvit_google_login($claims);
 
-//echo $resp;
+include(dirname(__DIR__).'/cms/engine.php');
+require_once(__DIR__.'/pgowner.php');
 
-include("../cms/engine.php");
-//$userdata = json_decode($resp, TRUE);
-//header('Access-Control-Allow-Origin: *');
-//header('Content-Type: application/json');
-
-//$_SESSION['_session_post_count'] = 1;
-$f = fetch('
-insert into `PlaygroundUsers` 
-( `google_user_email`, `google_user_family_name`, `google_user_given_name`, `google_user_locale`, `google_user_picture`, `google_user_sub`) 
-values 
+fetch('
+insert into `PlaygroundUsers`
+( `google_user_email`, `google_user_family_name`, `google_user_given_name`, `google_user_locale`, `google_user_picture`, `google_user_sub`)
+values
 ( :_session_google_user_email, :_session_google_user_family_name, :_session_google_user_given_name, :_session_google_user_locale, :_session_google_user_picture, :_session_google_user_sub)
 ON CONFLICT(google_user_email) DO NOTHING
-', $_POST);
+', array());
 
-$f = fetch('
-select  p.*
-from PlaygroundProjects p
-where p.`google_user_email` = :_session_google_user_email
-', $_POST);
-
-echo json_encode($f);
-
-//print_r( $f );
+echo json_encode(evolvit_pg_projects_and_cookie());
